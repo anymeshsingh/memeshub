@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import "partials/normalize";
+
+
+@import '~@angular/material/theming';
+@include mat-core();
+$memeshub-primary: mat-palette($mat-yellow, 900);
+$memeshub-accent:  mat-palette($mat-yellow, 900);
+$memeshub-warn:    mat-palette($mat-red);
+$memeshub-theme: mat-dark-theme($memeshub-primary, $memeshub-accent, $memeshub-warn);
+@include angular-material-theme($memeshub-theme);

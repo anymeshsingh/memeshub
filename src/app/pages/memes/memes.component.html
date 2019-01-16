@@ -1,0 +1,12 @@
+<div *ngIf="auth.user$ | async as user; else login">
+  <pre>
+    {{ user | json }}
+  </pre>
+  <img src="{{user.photoURL}}" alt="" srcset="">
+  <hr>
+  <button mat-raised-button color="primary" (tap)="auth.signout()">Signout</button>
+
+  <ng-template #login>
+    <button mat-raised-button color="primary" [routerLink]="['/']">HOME</button>
+  </ng-template>
+</div>

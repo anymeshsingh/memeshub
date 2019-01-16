@@ -1,0 +1,50 @@
+:host{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(51, 51, 51);
+    overflow-y: auto;
+}
+
+.signin-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    
+
+    .signin, .signup{
+        width: 90%;
+        height: 700px;
+        // animation: fadeIn 0.3s ease-in forwards;
+    }
+
+}
+
+.animated{
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-direction: forwards;
+    animation-direction: forwards;
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+ }
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}

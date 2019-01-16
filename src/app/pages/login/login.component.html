@@ -1,0 +1,114 @@
+<div class="signin-container">
+
+  <!---->
+  <!--SIGN IN-->
+  <!---->
+
+  <div class="signin text-center animated fadeIn" [ngClass]="{'hide': !login}">
+    <h1 class="font-white mt-3" style="font-weight:900">Memes<span class="font-default">Hub</span></h1>
+    <h4 class="font-grey mb-3">Sign in</h4>
+
+    <div class="social-signin p-1 border">
+      <button class="twitter-bg mb-1 w-100 font-white" mat-raised-button (tap)="twitterSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'twitter']"></fa-icon></span>
+        <span>Sign in with Twitter</span>
+      </button> <br>
+      <button class="facebook-bg mb-1 w-100 font-white" mat-raised-button (tap)="facebookSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'facebook-f']"></fa-icon></span>
+        <span>Sign in with Facebook</span>
+      </button> <br>
+      <button class="google-bg w-100 font-white" mat-raised-button (tap)="googleSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'google']"></fa-icon></span>
+        <span>Sign in with Google</span>
+      </button>
+    </div>
+
+    <hr class="mv-1">
+
+    <form class="login-form" [formGroup]="signinForm" (ngSubmit)="onSigninSubmit()">
+      <mat-form-field class="w-100">
+        <input matInput color="primary" class="font-white" placeholder="Email" type="email" formControlName="email">
+      </mat-form-field>
+      <div class="text-left font-white animated fadeIn mb-1" *ngIf="(signinEmail.dirty || signinEmail.touched) && signinEmail.invalid && signinEmail.errors.required">
+        Email is required.
+      </div>
+      <div class="text-left font-white mb-1" *ngIf="(signinEmail.dirty || signinEmail.touched) && signinEmail.invalid && signinEmail.errors.invalidEmail">
+        Value has to be a valid email address.
+      </div>
+      <mat-form-field class="w-100">
+        <input matInput color="primary" class="font-white" placeholder="Password" type="password" formControlName="password">
+      </mat-form-field>
+      <div class="text-left font-white animated fadeIn mb-1" *ngIf="(signinPassword.dirty || signinPassword.touched) && signinPassword.invalid && signinPassword.errors.required">
+        Password is required.
+      </div>
+      <button class="default-bg w-100 font-white" mat-raised-button color="primary" type="submit" [disabled]="!signinForm.valid">
+        <span>Sign In</span>
+      </button>
+    </form>
+
+    <div class="font-grey mt-1 mb-3">
+      Not a member? <a class="font-default underline" color="primary" (tap)="loginToggle()">Sign up now</a>
+    </div>
+  </div>
+
+  <!---->
+  <!--SIGN UP-->
+  <!---->
+
+  <div class="signup text-center animated fadeIn" [ngClass]="{'hide': login}">
+    <h1 class="font-white mt-3" style="font-weight:900">Memes<span class="font-default">Hub</span></h1>
+    <h4 class="font-grey mb-3">Sign up</h4>
+
+    <div class="social-login p-1 border">
+      <button class="twitter-bg mb-1 w-100 font-white" mat-raised-button (tap)="twitterSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'twitter']"></fa-icon></span>
+        <span>Sign up with Twitter</span>
+      </button> <br>
+      <button class="facebook-bg mb-1 w-100 font-white" mat-raised-button (tap)="facebookSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'facebook-f']"></fa-icon></span>
+        <span>Sign up with Facebook</span>
+      </button> <br>
+      <button class="google-bg w-100 font-white" mat-raised-button (tap)="googleSignin()">
+        <span class="mr-1"><fa-icon [icon]="['fab', 'google']"></fa-icon></span>
+        <span>Sign up with Google</span>
+      </button>
+    </div>
+
+    <hr class="mv-1">
+
+    <form class="login-form" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+      <mat-form-field class="w-100">
+        <input matInput color="primary" class="font-white" placeholder="Email" type="email" formControlName="email">
+      </mat-form-field>
+      <div class="text-left font-white animated fadeIn mb-1" *ngIf="(signupEmail.dirty || signupEmail.touched) && signupEmail.invalid && signupEmail.errors.required">
+        Email is required.
+      </div>
+      <div class="text-left font-white mb-1" *ngIf="(signupEmail.dirty || signupEmail.touched) && signupEmail.invalid && signupEmail.errors.invalidEmail">
+        Value has to be a valid email address.
+      </div>
+      <mat-form-field class="w-100">
+        <input matInput color="primary" class="font-white" placeholder="Username" type="text" minlength="8" maxlength="50" formControlName="username">
+      </mat-form-field>
+      <div class="text-left font-white animated fadeIn mb-1" *ngIf="(signupUsername.dirty || signupUsername.touched) && signupUsername.invalid && signupUsername.errors.required">
+        Username is required.
+      </div>
+      <div class="text-left font-white mb-1" *ngIf="(signupUsername.dirty || signupUsername.touched) && signupUsername.invalid && signupUsername.errors.invalidEmail">
+        Username should contains only alphanumeric characters.
+      </div>
+      <mat-form-field class="w-100">
+        <input matInput color="primary" class="font-white" placeholder="Password" type="password" formControlName="password">
+      </mat-form-field>
+      <div class="text-left font-white animated fadeIn mb-1" *ngIf="(signupPassword.dirty || signupPassword.touched) && signupPassword.invalid && signupPassword.errors.required">
+        Password is required.
+      </div>
+      <button class="default-bg w-100 font-white" mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">
+        <span>Sign Up</span>
+      </button>
+    </form>
+
+    <div class="font-grey mt-1 mb-3">
+      Already a member? <a class="font-default underline" (tap)="loginToggle()">Sign in</a>
+    </div>
+  </div>
+
+</div>
