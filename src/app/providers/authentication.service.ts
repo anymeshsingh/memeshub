@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { auth } from 'firebase';
 import { Username } from '../models/username.model';
@@ -17,6 +17,12 @@ export class AuthenticationService {
 
   // Logged in user state
   user$: Observable<User>;
+  userId: string;
+  staticUser;
+  // userEmail: string;
+  // userDisplayName: string;
+  // userUsername: string;
+  // userPhotoUrl: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -27,6 +33,10 @@ export class AuthenticationService {
       this.user$ = this.afAuth.authState.pipe(
         switchMap(user => {
           if(user) {
+            this.userId = user.uid;
+            this.afs.doc<User>(`users/${user.uid}`).get().toPromise().then(user=>{
+              this.staticUser = user.data()
+            });
             return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
           } else{
             return of(null);
@@ -42,10 +52,10 @@ export class AuthenticationService {
     }
     
     // Email and Password sign up method
-    async signup(email, password, username){
+    async signup(displayName, email, password, username){
       return await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result)=>{
-        this.updateUserData(result.user, username);
+        this.updateUserData(result.user, displayName, username);
       });
     }
 
@@ -62,7 +72,7 @@ export class AuthenticationService {
       const provider = new auth.TwitterAuthProvider();
       return await this.afAuth.auth.signInWithPopup(provider)
       .then((result)=>{
-        this.updateUserData(result.user, null);
+        this.updateUserData(result.user, null, null);
       });
     }
 
@@ -71,7 +81,7 @@ export class AuthenticationService {
       const provider = new auth.FacebookAuthProvider();
       return await this.afAuth.auth.signInWithPopup(provider)
       .then((result)=>{
-        this.updateUserData(result.user, null);
+        this.updateUserData(result.user, null, null);
       });
     }
 
@@ -80,20 +90,39 @@ export class AuthenticationService {
       const provider = new auth.GoogleAuthProvider();
       return await this.afAuth.auth.signInWithPopup(provider)
       .then((result)=>{
-        this.updateUserData(result.user, null);
+        this.updateUserData(result.user, null, null);
+      });
+    }
+
+    async updateDetails(displayName, email , username) {
+      let userdetails;
+      let docRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${this.userId}`);
+      docRef.get().toPromise().then(user => {
+        if(user.exists){
+          userdetails = {
+            ...user.data(),
+            displayName: displayName ? displayName : user.data().displayName,
+            email: email ? email : user.data().email,
+            username: username ? username : user.data().username 
+          }
+          // console.log(userdetails);
+          this.updateUserData(userdetails, displayName, username);          
+        }else{
+
+        }
       });
     }
 
     // Set/Update userdata on Firestore
-    updateUserData(user, username){
+    updateUserData(user, displayName, username){
       const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
       
       const data = {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName,
+        displayName: displayName ? displayName : (user.displayName ? user.displayName : ''),
         photoURL: user.photoURL,
-        username: username
+        username: username ? username : (user.username ? user.username : '')
       };
       userRef.set(data, { merge: true })
       .then((docRef)=>{

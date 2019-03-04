@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="navbar">
+      <button class="menu-btn" mat-icon-button [matMenuTriggerFor]="menu">
+          <fa-icon [icon]="['fas', 'bars']" size="lg"></fa-icon>
+      </button>
+
+      <a class="brand-logo" [routerLink]="['/memes']" style="font-weight:900">MemesHub</a>
+      
+      <div class="right-btns">
+        <button mat-icon-button [routerLink]="['/create-post']" routerLinkActive="router-link-active">
+          <fa-icon [icon]="['fas', 'plus']" size="lg"></fa-icon>
+        </button>
+        <div class="link-btns">
+          <button mat-button [routerLink]="['/profile']" routerLinkActive="router-link-active"><strong>Profile</strong></button>
+          <button mat-button [routerLink]="['/memes']" routerLinkActive="router-link-active"><strong>Memes</strong></button>
+          <button mat-button (tap)="auth.signout()"><strong>Sign Out</strong></button>
+        </div>
+      </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item [routerLink]="['/profile']">Profile</button>
+  <button mat-menu-item [routerLink]="['/memes']">Memes</button>
+  <button mat-menu-item (tap)="auth.signout()">Sign Out</button>
+</mat-menu>

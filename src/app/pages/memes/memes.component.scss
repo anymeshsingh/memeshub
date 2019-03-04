@@ -1,3 +1,25 @@
+@import '../../../partials/responsive';
+
 :host{
-    background-color: lightcoral;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(51, 51, 51);
+}
+
+.memes-container{
+    padding-top: 4rem !important;
+
+    @include sm{
+        padding-top: 5rem !important;
+    }
+
+    .infinite-scroll {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .post{
+        max-width: 500px;
+        margin: 0 auto;
+    }
 }

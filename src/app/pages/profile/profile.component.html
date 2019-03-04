@@ -1,0 +1,98 @@
+<div class="profile-container" *ngIf="auth.user$ | async as user">
+
+  <mat-card class="card m-1 p-2" [ngClass]="{'hide': !editPage}">
+    <div class="user-info">
+  
+      <!--DISPLAY PROFILE PICTURE-->
+      <div class="profile-picture">
+        <div *ngIf="user.photoURL; else defaultPic" class="avatar mv-1">
+          <img src="{{user.photoURL}}">
+        </div>
+        <ng-template #defaultPic>
+          <div class="avatar mv-1">
+            <img src="assets/images/profile.png">
+          </div>
+        </ng-template>
+      </div>
+      <!--DISPLAY USERNAME-->
+      <div class="username">
+        <div *ngIf="user.username" class="font-white font-1-5em  mb-1">
+          <b>@{{ user.username }}</b>
+        </div>
+      </div>
+  
+      <!--DISPLAY NAME-->
+      <div class="display-name">
+        <div *ngIf="user.displayName" class="font-white font-1-5em  mb-1">
+          {{ user.displayName }}
+        </div>
+      </div>
+  
+      <!--DISPLAY EMAIL-->
+      <div class="email">
+        <div *ngIf="user.email" class="font-white mb-1">
+          <span class="font-grey">{{ user.email }}</span>
+        </div>
+      </div>
+    
+      <button *ngIf="!user.username && !user.displayName && !user.email" class="default-bg mb-1 w-100 font-white" mat-raised-button color="primary" (tap)="editPage = !editPage">
+        <span>Edit</span>
+      </button>
+
+      <button mat-raised-button color="primary" class="mb-1 font-white w-100" (tap)="auth.signout()">Signout</button>
+    </div>
+    
+  </mat-card>
+  
+  <mat-card class="card m-1 p-2" [ngClass]="{'hide': editPage}">
+    <div class="user-info">
+  
+      <!--EDIT PROFILE PICTURE-->
+      <div class="profile-picture">
+        <div *ngIf="user.photoURL; else defaultPic" class="avatar mv-1">
+          <img src="{{user.photoURL}}">
+        </div>
+        <ng-template #defaultPic>
+          <div class="avatar mv-1">
+            <img src="assets/images/profile.png">
+          </div>
+        </ng-template>
+      </div>
+      
+      <form class="info-container text-center" [formGroup]="updateForm" (ngSubmit)="onUpdateSubmit()">
+        <!--EDIT USERNAME-->
+        <div class="username mb-1">
+          <div *ngIf="!user.username">
+            <mat-form-field class="w-100">
+              <input matInput color="primary" class="font-white" placeholder="Enter your username here" type="text" minlength="5" maxlength="30" formControlName="username">
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <!--EDIT DISPLAY NAME-->
+        <div class="display-name mb-1">
+          <div>
+            <mat-form-field class="w-100">
+              <input matInput color="primary" class="font-white" placeholder="Enter your full name" type="text" minlength="5" formControlName="displayName">
+            </mat-form-field>
+          </div> 
+        </div>
+    
+        <!--EDIT EMAIL-->
+        <div class="email mb-1">
+          <div *ngIf="!user.email">
+            <mat-form-field class="w-100">
+              <input matInput color="primary" class="font-white" placeholder="Enter your email here" type="email" minlength="10" formControlName="email">
+            </mat-form-field>
+          </div>
+        </div>
+      
+        <button class="default-bg w-100 font-white" mat-raised-button color="primary" type="submit" [disabled]="(!user.username && updateUsername.value == '') || (!user.displayName && updateDisplayName.value == '') || (!user.email && updateEmail.value == '') || !updateForm.valid">
+          <span>Save</span>
+        </button>
+      </form>
+      <button mat-raised-button color="primary" class="mb-1 font-white w-100" (tap)="auth.signout()">Signout</button>
+    </div>
+    
+  </mat-card>
+</div>

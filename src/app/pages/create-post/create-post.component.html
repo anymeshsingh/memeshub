@@ -1,0 +1,59 @@
+<div class="create-post-container p-1">
+  <mat-form-field class="w-100">
+    <input matInput [(ngModel)]="title" color="primary" class="font-white" placeholder="Title" type="text">
+  </mat-form-field>
+  <div class="dropzone mb-2" 
+    dropzone
+    (hovered)="toggleHover($event)"
+    (dropped)="onDrop($event)"
+    [class.hovering]="isHovering">
+
+    <p class="mb-1">Drag and Drop a File</p>
+    <input type="file" id="file" name="file" class="inputfile" accept="image/*, video/*" (change)="onDrop($event.target.files)" />
+    <label for="file" class="p-1"><strong><fa-icon [icon]="['fas', 'file-upload']"></fa-icon> or Choose a file</strong></label>
+  </div>
+  <button mat-raised-button color="primary" class="mb-1 font-white w-100" [disabled]="!(title && file)" (tap)="startUpload()">Post</button>
+  <div class="w-100" *ngIf="percentage | async as pct">
+    <!-- <progress [value]="pct" max="100"></progress> -->
+    <mat-progress-bar class="mb-1" [value]="pct" color="primary" mode="determinate"></mat-progress-bar>
+    <div class="text-center font-white">{{ pct | number }}%</div>
+  </div>
+  <div class="text-center font-white" *ngIf="snapshot | async as snap">
+    {{ snap.bytesTransferred }} of {{ snap.totalBytes }} 
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="dropzone" 
+     dropZone
+     (hovered)="toggleHover($event)"
+     (dropped)="startUpload($event)"
+     [class.hovering]="isHovering">
+
+
+
+     <h3>AngularFire Drop Zone</h3>
+
+     <div class="file">
+        <label class="file-label">
+
+
+        <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+
+
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i> 
+              <fa-icon icon="upload"></fa-icon>
+            </span>
+            <span class="file-label">
+              or choose a file…
+            </span>
+          </span>
+        </label>
+      </div>
+</div> -->
+

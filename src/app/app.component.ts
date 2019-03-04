@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './providers/authentication.service';
-import { take, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CreatePostComponent } from './pages/create-post/create-post.component';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +10,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private auth: AuthenticationService, private router: Router){
-    // this.auth.user$.pipe(
-    //   take(1),
-    //   map(user => user),
-    //   tap(loggedin => {
-    //     if(loggedin){
-    //       this.router.navigate(['/memes']);
-    //       }
-    //     }
-    //   )
-    // );
-    // this.auth.user$.subscribe(user=>{
-    //   if(user){
-    //     this.router.navigate(['/memes']);
-    //   }
-    // })
-  }
+  constructor(public auth: AuthenticationService, public router: Router, public dialog: MatDialog){}
 }

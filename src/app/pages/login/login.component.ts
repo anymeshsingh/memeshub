@@ -18,10 +18,6 @@ export class LoginComponent{
     this.signinForm = this.createSigninFormGroup();
     this.signupForm = this.createSignupFormGroup();
   }
-
-  revert() {
-    this.signinForm.reset();
-  }
   
   onSigninSubmit() {
     this.auth.signin(this.signinEmail.value, this.signinPassword.value)
@@ -30,14 +26,14 @@ export class LoginComponent{
     });    
   }
 
-  async onSignupSubmit() {
+  onSignupSubmit() {
     // Check if Username provided at the time of signup is already present or not 
     this.auth.usernameAreadyPresent(this.signupUsername.value)
     .then((result)=>{
       if(result.exists){
         this.errorSnackBar("Username is already taken!");
       } else {
-        this.auth.signup(this.signupEmail.value, this.signupPassword.value, this.signupUsername.value)
+        this.auth.signup(this.signupDisplayName.value, this.signupEmail.value, this.signupPassword.value, this.signupUsername.value)
           .catch((error)=>{
             this.errorSnackBar(error.message);
       });
@@ -54,6 +50,9 @@ export class LoginComponent{
     return this.signinForm.get('password');
   }
   // Sign up Form Properties
+  get signupDisplayName() {
+    return this.signupForm.get('displayName');
+  }
   get signupEmail() {
     return this.signupForm.get('email');
   }
@@ -90,6 +89,13 @@ export class LoginComponent{
   // Sign up form builder
   createSignupFormGroup() {
     return new FormGroup({
+      displayName: new FormControl(
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+        ],
+      ),
       email: new FormControl(
         '',
         [

@@ -4,7 +4,7 @@
 @import "./margin";
 @import "./padding";
 
-$default-color: #f4923a;;
+$default-color: #f4923a;
 
 *{
     padding: 0;
@@ -32,6 +32,11 @@ router-outlet ~ * {
 // }
 
 // Text Align
+
+a{
+    color: black;
+    text-decoration: none;
+}
 .text-center{
     text-align: center;
 }
@@ -44,10 +49,10 @@ router-outlet ~ * {
 
 // Display
 .show{
-    display: block;
+    display: block !important;
 }
 .hide{
-    display: none;
+    display: none !important;
 }
 
 // Border
@@ -72,18 +77,47 @@ router-outlet ~ * {
     color: rgb(153, 153, 153) !important;
 }
 
+//Font size
+.font-1rem{
+    font-size: 1rem;
+}
+.font-1em{
+    font-size: 1em;
+}
+.font-1-5rem{
+    font-size: 1.5rem;
+}
+.font-1-5em{
+    font-size: 1.5em;
+}
+.font-2rem{
+    font-size: 2rem;
+}
+.font-2em{
+    font-size: 2em;
+}
+.font-2-5rem{
+    font-size: 2.5rem;
+}
+.font-2-5em{
+    font-size: 2.5em;
+}
+
+
+
+
 //Brand Color
 .default-bg{
     background-color: $default-color;
 }
 .twitter-bg{
-    background-color: rgb(0, 134, 202) !important;
+    background-color: #1da1f2 !important;
 }
 .facebook-bg{
-    background-color: rgb(58, 90, 148) !important;
+    background-color: #3b5998 !important;
 }
 .google-bg{
-    background-color: rgb(65, 135, 237) !important;
+    background-color: #4285f4 !important;
 }
 
 // Height and Width
@@ -106,6 +140,10 @@ router-outlet ~ * {
 }
 .h-100v{
     height: 100vh;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
 
 // Scrollable

@@ -1,12 +1,35 @@
-<div *ngIf="auth.user$ | async as user; else login">
-  <pre>
-    {{ user | json }}
-  </pre>
-  <img src="{{user.photoURL}}" alt="" srcset="">
-  <hr>
-  <button mat-raised-button color="primary" (tap)="auth.signout()">Signout</button>
-
-  <ng-template #login>
-    <button mat-raised-button color="primary" [routerLink]="['/']">HOME</button>
-  </ng-template>
+<div class="memes-container this" >
+  <div *ngIf="posts"
+      class="infinite-scroll ph-1"
+      infinite-scroll
+      [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollUpDistance]="scrollUpDistance"
+      [infiniteScrollThrottle]="throttle"
+      (scrolled)="onScrollDown()"
+  >
+    
+    <div *ngFor="let post of posts" class="post pb-1">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar *ngIf="post.photoUrl" style="background-size: cover; background-image: url({{post.photoUrl.stringValue}}); border: 2px solid white"></div>
+          <div mat-card-avatar *ngIf="!post.photoUrl" style="background-size: cover; background-color: white; background-image: url('assets/images/profile.png'); border: 2px solid white"></div>
+          <mat-card-title *ngIf="post.username">{{post.username.stringValue}}</mat-card-title>
+          <mat-card-title *ngIf="!post.username">{{post.uid.stringValue}}</mat-card-title>
+          <mat-card-subtitle>Posted on: {{post.postedOnDate.integerValue | date:'short'}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image *ngIf="post.imageUrl.stringValue" src="{{post.imageUrl.stringValue}}" alt="{{post.title.stringValue}}">
+        <video style="width:100%" *ngIf="post.videoUrl.stringValue" controls>
+          <source src="{{post.videoUrl.stringValue}}">
+          Your browser does not support HTML5 video.
+        </video>
+        <mat-card-content>
+          <p>{{post.title.stringValue}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 </div>

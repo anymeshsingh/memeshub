@@ -1,3 +1,6 @@
+@import "../../../partials/responsive";
+
+
 :host{
     height: 100%;
     width: 100%;
@@ -17,34 +20,34 @@
     .signin, .signup{
         width: 90%;
         height: 700px;
-        // animation: fadeIn 0.3s ease-in forwards;
+        max-width: 400px;
+
+        h1{
+            @include md{
+                font-size: 50px;
+            }
+        }
+        h4{
+            @include md{
+                font-size: 25px;
+            }
+        }
+
+        .default-bg:hover{
+            background-color: darken($color: #f4923a, $amount: 20) !important;
+        }
+        .default-bg:disabled:hover{
+            background-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        .twitter-bg:hover{
+            background-color: #0086ca !important;
+        }
+        .facebook-bg:hover{
+            background-color: #344e86 !important;
+        }
+        .google-bg:hover{
+            background-color: #2a75f3 !important;
+        }
     }
 
-}
-
-.animated{
-    -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-direction: forwards;
-    animation-direction: forwards;
-}
-
-.fadeIn {
-    -webkit-animation-name: fadeIn;
-    animation-name: fadeIn;
- }
-
-@keyframes fadeIn{
-    0%{
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    100%{
-        opacity: 1;
-        transform: scale(1);
-    }
 }

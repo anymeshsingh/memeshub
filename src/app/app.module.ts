@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,23 +20,33 @@ import { MaterialModule } from './material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter, faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFileUpload, faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Services and Guards
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { AuthenticationService } from './providers/authentication.service';
+import { FirestoreService } from './providers/firestore.service';
 
 
 //Custom components
 import { LoginComponent } from './pages/login/login.component';
 import { MemesComponent } from './pages/memes/memes.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { CreatePostComponent } from './pages/create-post/create-post.component';
+import { DropzoneDirective } from './directives/dropzone.directive';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
-library.add(faTwitter,faFacebookF, faGoogle);
+library.add(faTwitter,faFacebookF, faGoogle, faFileUpload, faPlus, faBars);
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MemesComponent,
+    ProfileComponent,
+    CreatePostComponent,
+    DropzoneDirective,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,11 +60,13 @@ library.add(faTwitter,faFacebookF, faGoogle);
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    InfiniteScrollModule
   ],
   providers: [
     AuthenticationGuard,
-    AuthenticationService
+    AuthenticationService,
+    FirestoreService
   ],
   bootstrap: [AppComponent]
 })

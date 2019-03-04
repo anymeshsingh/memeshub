@@ -1,0 +1,34 @@
+@import '../../../partials/responsive';
+
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+
+    .menu-btn{
+        @include sm {
+            display: none;
+        }
+    }
+
+    .brand-logo{
+        @include sm{
+            padding-left: 1rem; 
+        }
+    }
+
+    .right-btns{
+        display: flex;
+        justify-content: space-evenly;
+        .link-btns{
+            display: none;
+            @include sm {
+                display: block;
+            }
+        }
+    }
+}
+
+.router-link-active{
+    color: white !important;
+}
